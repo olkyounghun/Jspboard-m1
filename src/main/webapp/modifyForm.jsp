@@ -90,6 +90,7 @@
     PrintWriter script = response.getWriter();
     String ckpw = new BoardDAO().password(boardId);
     if(boardPw.equals(ckpw)){
+        // 파일이 없었는데 첨부된 파일이 생성
         if(chkmodify == null && boardFile != null){
             /** 생성 */
 
@@ -151,18 +152,21 @@
             script.println("</script>");
 
         /** 삭제 */
+        // 파일이 있었는데 첨부파일이 없음
         }else if(chkmodify != null && boardFile == null) {
             // 해당파일이 존재한다면 삭제
             File fileObj = new File(saveFolderPath);
-            if( fileObj.exists() ) {
+            /** file.exists 와 isDirectory 로 했었는데 동작하지않아 isFile로 진행하니 성공적으로 작동*/
+            if( fileObj.isFile() ) {
                 fileObj.delete();
                 fileDao.delete(boardId);
             }
         /** 수정 */
-        }else{
+        // 파일이 있었는데 첨부파일이 있음
+        }else if(chkmodify != null && boardFile != null){
 
             File fileObj = new File(saveFolderPath);
-            if( fileObj.exists() ) {
+            if( fileObj.isFile() ) {
                 fileObj.delete();
             }
 
