@@ -26,6 +26,12 @@
         left: 50%;
         transform: translate(-50%,-50%);
     }
+    #comment1 {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
 </style>
 <body>
 <%
@@ -140,6 +146,22 @@
                     </div>
                 </div>
             </div>
+            <div id="comment1">
+                <div>
+                    <label>
+                        덧글아이디 : <input type="text">
+                    </label>
+                    <label>
+                        비밀번호 : <input type="password">
+                    </label>
+                </div>
+                <label>
+                    내용 : <input type="text">
+                </label>
+                <div>
+                    <button id="WriteComment" class="btn btn-secondary">작성</button>
+                </div>
+            </div>
             <div id="wrapper1" class="form-check">
                 <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=m'">수정</button>
                 <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=d'">삭제</button>
@@ -150,6 +172,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
-<%
-    /**java.net.URLEncoder.encode(,"UTF-8") */
-%>
+<script type="text/javascript">
+    $(function (){
+        $('button').click(function (){
+
+            $.ajax({
+                /** 보낼 데이터 */
+                url:"data.jsp",
+                type:"get",
+                dataType:"json",
+
+                success: function ( obj ){
+                    let json = JSON.parse( obj );
+                },
+                error: function (){
+                    alert('error');
+                }
+            })
+        })
+    })
+</script>
