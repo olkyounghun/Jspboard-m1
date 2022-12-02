@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static com.example.jspboard.board.BoardDAO.tripleEx;
+
 public class CommentDAO {
 
     /** 데이터베이스와 연결 */
@@ -47,7 +49,28 @@ public class CommentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            BoardDAO.tripleEx(conn,pstmt,rs);
+            tripleEx(conn,pstmt,rs);
+        }
+        return -1;
+    }
+
+    /** 덧글 삭제 */
+    public int DeleteComment(int CmentId) {
+        String SQL = "DELETE " +
+                     "FROM comment " +
+                     "WHERE Cment_Id = ? ";
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        Connection conn = null;
+        try{
+            conn = getConnetion();
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1,CmentId);
+            return pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            tripleEx(conn, pstmt, rs);
         }
         return -1;
     }
