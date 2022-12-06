@@ -7,6 +7,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="com.example.jspboard.comment.Comment" %>
+<%@ page import="com.example.jspboard.comment.CommentDAO" %>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -30,6 +32,7 @@
         position: absolute;
         top: 70%;
         left: 50%;
+        border: 1px solid black;
         transform: translate(-50%,-50%);
     }
 </style>
@@ -55,6 +58,7 @@
 
     // 데이터가 있다면
     Board board = new BoardDAO().getBoard(boardId);
+    Comment cment = new CommentDAO().SearchComment(boardId);
 
     // 파일도 같이
     String boardFile = new FileDAO().getRFile(boardId);
@@ -148,19 +152,36 @@
             </div>
             <div id="comment1">
                 <div>
+                    <div>
+                        <label>
+                            <%=cment.getCment_user()%>
+                        </label>
+                        <label>
+                            <%=cment.getCment_regdate()%>
+                        </label>
+                    </div>
                     <label>
-                        덧글아이디 : <input type="text">
-                    </label>
-                    <label>
-                        비밀번호 : <input type="password">
+                        <%=cment.getCment_content()%>
                     </label>
                 </div>
-                <label>
-                    내용 : <input type="text">
-                </label>
-                <div>
-                    <button id="WriteComment" class="btn btn-secondary">작성</button>
-                </div>
+                <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp">
+                    <div>
+                        <div>
+                            <label>
+                                덧글아이디 : <input type="text" id="cmentUser">
+                            </label>
+                            <label>
+                                비밀번호 : <input type="password" id="cmentPw">
+                            </label>
+                        </div>
+                        <label>
+                            내용 : <input type="text" id="cmentContent">
+                        </label>
+                        <div>
+                            <button type="submit" id="WriteComment" class="btn btn-secondary">작성</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div id="wrapper1" class="form-check">
                 <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=m'">수정</button>
@@ -171,24 +192,46 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-</html>
 <script type="text/javascript">
-    $(function (){
-        $('button').click(function (){
 
-            $.ajax({
-                /** 보낼 데이터 */
-                url:"data.jsp",
-                type:"get",
-                dataType:"json",
+    const cmentUser = document.getElementById("cmentUser");
+    const cmentPw = document.getElementById("cmentPw");
+    const cmentContent = document.getElementById("cmentContent");
 
-                success: function ( obj ){
-                    let json = JSON.parse( obj );
-                },
-                error: function (){
-                    alert('error');
-                }
-            })
-        })
-    })
+    // 아이디 정규식
+    const userJ = /.{3,5}/;
+    // 비밀번호 정규식
+    const pwJ = /.{4,50}/;
+    // 내용 정규식
+    const contentJ = /.{4,200}/;
+
+    function commentform_chk(){
+        // NULL 체크
+        if(cmentUser.value === ""){
+            alert("아이디를 입력해주세요.");
+            return false;
+        }
+        if(cmentPw.value === ""){
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        }
+        if(cmentContent.value === ""){
+            alert("댓글내용을 입력해주세요.");
+            return false;
+        }
+        if(userJ.test(cmentUser.value) === false){
+            alert("아이디는 4글자 이상 5글자 미만으로 입력해주세요.");
+            return false;
+        }
+        if(pwJ.test(cmentPw.value) === false){
+            alert("비밀번호는 4글자 이상 50글자 미만으로 입력해주세요.");
+            return false;
+        }
+        if(contentJ.test(cmentContent.value) === false){
+            alert("내용은 4글자 이상 200글자 미만으로 입력해주세요.");
+            return false;
+        }
+        return true;
+    }
 </script>
+</html>
