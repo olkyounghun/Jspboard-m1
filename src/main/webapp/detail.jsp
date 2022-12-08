@@ -9,6 +9,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="com.example.jspboard.comment.Comment" %>
 <%@ page import="com.example.jspboard.comment.CommentDAO" %>
+<%@ page import="java.sql.Timestamp" %>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -59,6 +60,19 @@
     // 데이터가 있다면
     Board board = new BoardDAO().getBoard(boardId);
     Comment cment = new CommentDAO().SearchComment(boardId);
+
+    String cmentUser = "";
+    if(cment != null){
+        cmentUser = cment.getCment_user();
+    }
+    Timestamp cmentRegdate = null;
+    if(cment != null){
+        cmentRegdate = cment.getCment_regdate();
+    }
+    String cmentContent = "";
+    if(cment != null){
+        cmentContent = cment.getCment_content();
+    }
 
     // 파일도 같이
     String boardFile = new FileDAO().getRFile(boardId);
@@ -154,14 +168,20 @@
                 <div>
                     <div>
                         <label>
-                            <%=cment.getCment_user()%>
+                            <% if( cment != null){%>
+                                <%=cmentUser%>
+                            <%}%>
                         </label>
                         <label>
-                            <%=cment.getCment_regdate()%>
+                            <% if( cment != null){%>
+                                <%=cmentRegdate%>
+                            <%}%>
                         </label>
                     </div>
                     <label>
-                        <%=cment.getCment_content()%>
+                        <% if( cment != null){%>
+                            <%=cmentContent%>
+                        <%}%>
                     </label>
                 </div>
                 <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp">
