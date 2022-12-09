@@ -7,8 +7,6 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*"%>
-<%@ page import="com.oreilly.servlet.MultipartRequest"  %>
-<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
 <%@ page import="com.example.jspboard.comment.CommentDAO" %>
 
 <html>
@@ -18,31 +16,23 @@
 </head>
 <body>
 <%
-    // 파일 관련 부분
-    String savePath = "C:\\\\Users\\\\Administrator\\\\Downloads\\\\BoardUploadFiles";
-    int sizeLimit = 5 * 1024 * 1024; // 키로바이트 * 메가바이트 * 기가바이트
-
-    MultipartRequest multi = new MultipartRequest(request,
-            savePath,
-            sizeLimit,
-            "UTF-8",
-            new DefaultFileRenamePolicy());
+    request.setCharacterEncoding("utf-8");
 
     int boardId = 0;
-    if(multi.getParameter("boardId") != null){
-        boardId = Integer.parseInt(multi.getParameter("boardId"));
+    if(request.getParameter("boardId") != null){
+        boardId = Integer.parseInt(request.getParameter("boardId"));
     }
-    String CmentUser = "";
-    if(multi.getParameter("CmentUser") != null){
-        CmentUser = multi.getParameter("CmentUser");
+    String cmentUser = "";
+    if(request.getParameter("cmentUser") != null){
+        cmentUser = request.getParameter("cmentUser");
     }
-    String CmentPw = "";
-    if(multi.getParameter("CmentPw") != null){
-        CmentPw = multi.getParameter("CmentPw");
+    String cmentPw = "";
+    if(request.getParameter("cmentPw") != null){
+        cmentPw = request.getParameter("cmentPw");
     }
-    String CmentContent ="";
-    if(multi.getParameter("CmentPw") != null){
-        CmentPw = multi.getParameter("CmentPw");
+    String cmentContent = "";
+    if(request.getParameter("cmentContent") != null){
+        cmentContent = request.getParameter("cmentContent");
     }
 
     if(boardId == 0){
@@ -54,7 +44,7 @@
     }
 
     CommentDAO commentDAO = new CommentDAO();
-    int result = commentDAO.WriteComment(boardId,CmentUser,CmentPw,CmentContent);
+    int result = commentDAO.WriteComment(boardId,cmentUser,cmentPw,cmentContent);
 
     PrintWriter script = response.getWriter();
     if(result == -1){

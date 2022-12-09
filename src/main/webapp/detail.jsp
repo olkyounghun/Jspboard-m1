@@ -184,18 +184,18 @@
                         <%}%>
                     </label>
                 </div>
-                <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp">
+                <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp?boardId=<%=board.getBoard_id()%>" >
                     <div>
                         <div>
                             <label>
-                                덧글아이디 : <input type="text" id="cmentUser">
+                                덧글아이디 : <input type="text" id="cmentUser" name="cmentUser">
                             </label>
                             <label>
-                                비밀번호 : <input type="password" id="cmentPw">
+                                비밀번호 : <input type="password" id="cmentPw" name="cmentPw">
                             </label>
                         </div>
                         <label>
-                            내용 : <input type="text" id="cmentContent">
+                            내용 : <input type="text" id="cmentContent" name="cmentContent">
                         </label>
                         <div>
                             <button type="submit" id="WriteComment" class="btn btn-secondary">작성</button>

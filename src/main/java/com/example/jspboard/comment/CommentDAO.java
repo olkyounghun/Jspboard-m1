@@ -27,9 +27,9 @@ public class CommentDAO {
 
     /** 덧글 생성 */
     public int WriteComment(int boardId,
-                            String CmentUser,
-                            String CmentPw,
-                            String CmentContent
+                            String cmentUser,
+                            String cmentPw,
+                            String cmentContent
                             ){
         String SQL = "INSERT " +
                        "INTO comment (board_id, Cment_User, Cment_Password, Cment_Content, Cment_Regdate, Cment_Moddate) " +
@@ -42,9 +42,9 @@ public class CommentDAO {
             conn = getConnetion();
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, boardId);
-            pstmt.setString(2, CmentUser);
-            pstmt.setString(3, CmentPw);
-            pstmt.setString(4, CmentContent);
+            pstmt.setString(2, cmentUser);
+            pstmt.setString(3, cmentPw);
+            pstmt.setString(4, cmentContent);
             return pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
