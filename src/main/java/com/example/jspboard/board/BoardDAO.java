@@ -268,7 +268,7 @@ public class BoardDAO {
         }finally {
             tripleEx(conn, pstmt, rs);
         }
-    return list;
+        return list;
     }
 
     /** 게시글 작성 */

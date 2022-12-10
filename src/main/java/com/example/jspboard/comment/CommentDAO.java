@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import static com.example.jspboard.board.BoardDAO.tripleEx;
 
@@ -52,6 +53,42 @@ public class CommentDAO {
             tripleEx(conn,pstmt,rs);
         }
         return -1;
+    }
+
+    /** 댓글 목록 불러오기 */
+    public ArrayList<Comment> getList(int boardId){
+
+        String SQL = "SELECT * " +
+                     "FROM comment " +
+                     "WHERE 1 = 1 " +
+                     "AND board_id = ? " +
+                     "ORDER BY Cment_Id";
+
+        ArrayList<Comment> list = new ArrayList<>();
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        Connection conn = null;
+        try{
+            conn =getConnetion();
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1,boardId);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                Comment Cment = new Comment();
+                Cment.setCment_id(rs.getInt("Cment_Id"));
+                Cment.setCment_user(rs.getString("Cment_User"));
+                Cment.setCment_password(rs.getString("Cment_Password"));
+                Cment.setCment_content(rs.getString("Cment_Content"));
+                Cment.setCment_regdate(rs.getTimestamp("Cment_Regdate"));
+                Cment.setCment_moddate(rs.getTimestamp("Cment_Moddate"));
+                list.add(Cment);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            BoardDAO.tripleEx(conn,pstmt,rs);
+        }
+        return list;
     }
 
     /** 댓글 찾아오기 */

@@ -60,6 +60,7 @@
     // 데이터가 있다면
     Board board = new BoardDAO().getBoard(boardId);
     Comment cment = new CommentDAO().SearchComment(boardId);
+    ArrayList<Comment> list = new CommentDAO().getList(boardId);
 
     String cmentUser = "";
     if(cment != null){
@@ -165,25 +166,40 @@
                 </div>
             </div>
             <div id="comment1">
-                <div>
-                    <div>
-                        <label>
-                            <% if( cment != null){%>
-                                <%=cmentUser%>
-                            <%}%>
-                        </label>
-                        <label>
-                            <% if( cment != null){%>
-                                <%=cmentRegdate%>
-                            <%}%>
-                        </label>
-                    </div>
-                    <label>
-                        <% if( cment != null){%>
-                            <%=cmentContent%>
-                        <%}%>
-                    </label>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>댓글아이디</td>
+                            <td>작성날짜</td>
+                            <td>내용</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for(int i = 0; i < list.size(); i++){
+                        %>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <%=list.get(i).getCment_user()%>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <%=list.get(i).getCment_regdate()%>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <%=list.get(i).getCment_content()%>
+                                    </label>
+                                </td>
+                            </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
                 <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp?boardId=<%=board.getBoard_id()%>" >
                     <div>
                         <div>
