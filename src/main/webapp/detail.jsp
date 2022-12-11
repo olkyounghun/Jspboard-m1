@@ -17,6 +17,7 @@
     <title> 게시판 글 보기</title>
 </head>
 <style>
+    /**
     #wrapper {
         display: flex;
         justify-content: center;
@@ -36,6 +37,7 @@
         border: 1px solid black;
         transform: translate(-50%,-50%);
     }
+     */
 </style>
 <body>
 <%
@@ -110,120 +112,116 @@
 
 
 %>
-    <div id="wrapper" >
-        <div>
-            <div>
-                <div class="form-check" style= "text-align : center;">
-                    <label>게시물 정보</label>
-                </div>
+    <div class="container text-center" id="wrapper" >
+        <div class="row" >
+            <div class="col-sm-3"> 제목 </div>
+            <div class="col-sm-9">
+                <input value="<%=board.getBoard_title()%>" style="float: right;width: 50%;" disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
                 <div>
-                    <div class="form-check">
-                        <label>카테고리 <input value="<%=board.getCategory_type()%>" disabled> </label>
-                    </div>
+                    카테고리
+                    <input value="<%=board.getCategory_type()%>" disabled>
                 </div>
-                <div class="form-check" style="float: left;width: 50%;">
-                    <label> 제목 </label>
-                    <label>
-                        <input value="<%=board.getBoard_title()%>" style="float: right;width: 50%;" disabled>
-                    </label>
-                </div>
-                <div style="float: right;width: 50%;">
-                    <div class="form-check">
-                        <label>작성자 </label>
-                        <label>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="com-sm-6">
+                        <div>작성자 </div>
+                        <div>
                             <input value="<%=board.getBoard_user()%>" disabled>
-                        </label>
-                    </div>
-                    <div class="border border-2">
-                        <div class="form-check">
-                            <%--<label style="font-size: 0.8rem">글 번호 <%=board.getBoard_id()%></label>--%>
-                        </div>
-                        <div class="form-check">
-                            <%--<label style="font-size: 0.8rem">조회수 <%=board.getBoard_views()%></label>--%>
-                            <label style="font-size: 0.8rem">
-                                <%if(board.getBoard_moddate() == null){%> <%=boardRegdate%><%} else{%><%=boardModdate%><%}%>
-                            </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-check" style="display:flex">
-                    <label style="align: center"> 내용 </label>
-                    <label>
-                        <textarea style="align: center" disabled>
-                            <%=board.getBoard_content()%>
-                        </textarea>
-                    </label>
-                </div>
-                <div class="form-check">
-                    <div style="float: left;width: 50%;"> 파일 </div>
-                    <div style="float: right;width: 50%;">
-                        <% for(String bfile : chkfiles){ %>
-                            <a href="${pageContext.request.contextPath}/downloadForm.jsp?boardId=<%=boardId%>&fileName=<%=bfile%>">
-                                <%=boardFile%>
-                            </a>
-                        <%}%>
+                    <div class="col-sm-6">
+                        <div>
+                            <%if(board.getBoard_moddate() == null){%> <%=boardRegdate%><%} else{%><%=boardModdate%><%}%>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="comment1">
-                <table>
-                    <thead>
+        </div>
+        <div class="row">
+            <div class="col-sm-12"> 내용 </div>
+        </div>
+        <div class="row">
+            <div class="com-sm-12">
+                <textarea disabled>
+                    <%=board.getBoard_content()%>
+                </textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12"> 파일 </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <% for(String bfile : chkfiles){ %>
+                <a href="${pageContext.request.contextPath}/downloadForm.jsp?boardId=<%=boardId%>&fileName=<%=bfile%>">
+                    <%=boardFile%>
+                </a>
+                <%}%>
+            </div>
+        </div>
+        <div id="comment1">
+            <table>
+                <thead>
+                    <tr>
+                        <td>댓글아이디</td>
+                        <td>작성날짜</td>
+                        <td>내용</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for(int i = 0; i < list.size(); i++){
+                    %>
                         <tr>
-                            <td>댓글아이디</td>
-                            <td>작성날짜</td>
-                            <td>내용</td>
+                            <td>
+                                <label>
+                                    <%=list.get(i).getCment_user()%>
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <%=list.get(i).getCment_regdate()%>
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <%=list.get(i).getCment_content()%>
+                                </label>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            for(int i = 0; i < list.size(); i++){
-                        %>
-                            <tr>
-                                <td>
-                                    <label>
-                                        <%=list.get(i).getCment_user()%>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <%=list.get(i).getCment_regdate()%>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <%=list.get(i).getCment_content()%>
-                                    </label>
-                                </td>
-                            </tr>
-                        <%
-                            }
-                        %>
-                    </tbody>
-                </table>
-                <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp?boardId=<%=board.getBoard_id()%>" >
+                    <%
+                        }
+                    %>
+                </tbody>
+            </table>
+            <form method="post" onsubmit="commentform_chk(this)" action="commentForm.jsp?boardId=<%=board.getBoard_id()%>" >
+                <div>
                     <div>
-                        <div>
-                            <label>
-                                덧글아이디 : <input type="text" id="cmentUser" name="cmentUser">
-                            </label>
-                            <label>
-                                비밀번호 : <input type="password" id="cmentPw" name="cmentPw">
-                            </label>
-                        </div>
                         <label>
-                            내용 : <input type="text" id="cmentContent" name="cmentContent">
+                            덧글아이디 : <input type="text" id="cmentUser" name="cmentUser">
                         </label>
-                        <div>
-                            <button type="submit" id="WriteComment" class="btn btn-secondary">작성</button>
-                        </div>
+                        <label>
+                            비밀번호 : <input type="password" id="cmentPw" name="cmentPw">
+                        </label>
                     </div>
-                </form>
-            </div>
-            <div id="wrapper1" class="form-check">
-                <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=m'">수정</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=d'">삭제</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='index.jsp'">목록</button>
-            </div>
+                    <label>
+                        내용 : <input type="text" id="cmentContent" name="cmentContent">
+                    </label>
+                    <div>
+                        <button type="submit" id="WriteComment" class="btn btn-secondary">작성</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="wrapper1" class="form-check">
+            <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=m'">수정</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='password.jsp?boardId=<%=board.getBoard_id()%>&type=d'">삭제</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='index.jsp'">목록</button>
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
