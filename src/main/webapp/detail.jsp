@@ -16,29 +16,6 @@
     <meta charset="UTF-8">
     <title> 게시판 글 보기</title>
 </head>
-<style>
-    /**
-    #wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
-    #wrapper1 {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-    }
-    #comment1 {
-        position: absolute;
-        top: 70%;
-        left: 50%;
-        border: 1px solid black;
-        transform: translate(-50%,-50%);
-    }
-     */
-</style>
 <body>
 <%
 
@@ -164,7 +141,7 @@
                 <%}%>
             </div>
         </div>
-        <div id="comment1">
+        <div id="commentp">
             <table>
                 <thead>
                     <tr>
@@ -203,17 +180,17 @@
                 <div>
                     <div>
                         <label>
-                            덧글아이디 : <input type="text" id="cmentUser" name="cmentUser">
+                            덧글아이디 : <input type="text" name="cmentUser">
                         </label>
                         <label>
-                            비밀번호 : <input type="password" id="cmentPw" name="cmentPw">
+                            비밀번호 : <input type="password" name="cmentPw">
                         </label>
                     </div>
                     <label>
-                        내용 : <input type="text" id="cmentContent" name="cmentContent">
+                        내용 : <input type="text" name="cmentContent">
                     </label>
                     <div>
-                        <button type="submit" id="WriteComment" class="btn btn-secondary">작성</button>
+                        <button type="submit" class="btn btn-secondary">작성</button>
                     </div>
                 </div>
             </form>
