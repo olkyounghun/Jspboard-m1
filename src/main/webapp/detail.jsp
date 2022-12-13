@@ -16,6 +16,14 @@
     <meta charset="UTF-8">
     <title> 게시판 글 보기</title>
 </head>
+<style>
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+</style>
 <body>
 <%
 
@@ -89,7 +97,7 @@
 
 
 %>
-    <div class="container text-center" id="wrapper" >
+    <div class="wrapper" id="wrapper" >
         <div class="row" >
             <div class="col-sm-3"> 제목 </div>
             <div class="col-sm-9">
