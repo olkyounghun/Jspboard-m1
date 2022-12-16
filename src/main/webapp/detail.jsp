@@ -114,21 +114,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="padding-top: 10px;">
                     <div class="com-sm-12">
-                        <textarea style="width: 100%; height: 6.25em; border: none; resize: none;" disabled>
+                        <textarea style="outline: 1px solid gray; width: 100%; height: 6.25em; border: none; resize: none;" disabled>
                             <%=board.getBoard_content()%>
                         </textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12"> 파일 :
+                    <div class="col-sm-12" style="padding-top: 10px;"> 파일 :
                         <% for(String bfile : chkfiles){ %>
                         <a href="${pageContext.request.contextPath}/downloadForm.jsp?boardId=<%=boardId%>&fileName=<%=bfile%>">
                             <%=boardFile%>
                         </a>
-                        <%} if(chkfiles == null){%>
-                            파일 없음
                         <%}%>
                     </div>
                 </div>
@@ -147,20 +145,20 @@
                                 for(int i = 0; i < list.size(); i++){
                             %>
                                 <tr>
-                                    <td>
+                                    <td style="weight : 90%;">
                                         <label>
                                             <%=list.get(i).getCment_user()%>
                                         </label>
                                     </td>
-                                    <td>
+                                    <td style="weight : 90%;">
+                                        <label>
+                                            <%=list.get(i).getCment_content()%>
+                                        </label>
+                                    </td>
+                                    <td style="weight : 90%;">
                                         <label>
                                             <% String regDate = simple.format( list.get(i).getCment_regdate() ); %>
                                             <%= regDate %>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <%=list.get(i).getCment_content()%>
                                         </label>
                                     </td>
                                 </tr>
@@ -181,7 +179,7 @@
                             </div>
                             <div class="row" style="padding: 5px;">
                                 <div class="col-sm-9">
-                                    <input type="text" name="cmentContent" style="width: 100%; height: 6.25em; border: 2px solid rgb(0, 0, 0);; outline-color: #FE6B8B; resize: none;">
+                                    <input type="text" name="cmentContent" style="width: 100%; height: 6.25em; border: 2px solid rgb(128, 128, 128);; outline-color: #FE6B8B; resize: none;">
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="submit" class="btn btn-secondary">작성</button>
